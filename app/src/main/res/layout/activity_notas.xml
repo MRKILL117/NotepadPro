@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NotasActivity"
+    android:orientation="vertical"
+    android:background="#201c37">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight=".8"
+                android:text="Notas"
+                android:textColor="#dcdeb9"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="30dp"
+                android:textSize="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+
+            <Button
+                android:layout_marginTop="8dp"
+                android:layout_weight=".2"
+                android:id="@+id/agregarNota"
+                android:layout_marginHorizontal="20dp"
+                android:backgroundTint="#fd4848"
+                android:text="Agregar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></Button>
+
+        </LinearLayout>
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecyclerNotas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:scrollbars="vertical"
+            ></androidx.recyclerview.widget.RecyclerView>
+
+        
+        </LinearLayout>
+
+
+
+</ScrollView>
