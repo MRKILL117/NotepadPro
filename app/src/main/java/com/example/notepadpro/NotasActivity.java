@@ -2,21 +2,22 @@ package com.example.notepadpro;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.fragment.app.FragmentActivity;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotasActivity extends AppCompatActivity implements agregarNota.DataListener{
 
+    private boolean eliminar = false;
+    private ToggleButton cambiarAccion;
     private List<Notas> lista;
     private RecyclerView myRecyclerView;
     private RecyclerView.Adapter miAdaptador;
@@ -30,15 +31,29 @@ public class NotasActivity extends AppCompatActivity implements agregarNota.Data
         setContentView(R.layout.activity_notas);
         agregar = findViewById(R.id.agregarNota);
         lista = new ArrayList<Notas>();
-        //lista = llenarNotas();
         myRecyclerView = (RecyclerView) findViewById(R.id.RecyclerNotas);
         miLayoutManager = new LinearLayoutManager(this);
         miAdaptador = new AdaptadorNotas(lista, R.layout.item_notas, new AdaptadorNotas.OnItemClickListener() {
             @Override
             public void onItemClick(String name, String fecha, String nota, int position) {
-
-
-
+                Notas nuevo = getNota(position);
+                if(eliminar){
+                    quitarElemento(nuevo, position);
+                }
+                else{
+                    agregarNota.setNota(nuevo);
+                    DialogFragment fragment = new agregarNota();
+                    fragment.show(getSupportFragmentManager(), "Editar nota");
+                    quitarElemento(nuevo, position);
+                }
+            }
+        });
+        cambiarAccion = findViewById(R.id.toggle);
+        cambiarAccion.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!compoundButton.isChecked())eliminar = false;
+                else eliminar = true;
             }
         });
         myRecyclerView.setLayoutManager(miLayoutManager);
@@ -52,21 +67,18 @@ public class NotasActivity extends AppCompatActivity implements agregarNota.Data
         });
     }
 
-    private List<Notas> llenarNotas(){
-        return new ArrayList<Notas>(){{
-            add(new Notas("Nota 1", "15/9/2022", "Hoy comi sopa"));
-            add(new Notas("Nota 2", "18/9/2022", "Hoy no comi"));
-            add(new Notas("Nota 3", "22/9/2022", "Tengo hambre"));
-        }};
-    }
-
     public void agregarElemento(Notas nota, int posicion){
         lista.add(nota);
         miAdaptador.notifyItemInserted(posicion);
     }
 
-    public void quitarElemento(Notas nota){
+    public Notas getNota(int posicion){
+        return lista.get(posicion);
+    }
 
+    public void quitarElemento(Notas nota, int posicion){
+        lista.remove(nota);
+        miAdaptador.notifyItemRemoved(posicion);
     }
 
     @Override
