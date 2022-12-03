@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:background="#fcffba"
+    tools:context=".agregarNota">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/TituloNuevo"
+                android:layout_width="match_parent"
+                android:layout_weight=".4"
+                android:layout_height="wrap_content"
+                android:textColor="#ded5da"
+                android:text="Titulo"
+                android:textSize="25dp"
+                android:background="#2e3a46"
+                ></EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#2e3a46">
+
+                <TextView
+                    android:id="@+id/FechaNuevo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ded5da"
+                    android:text="Fecha"
+                    android:textSize="25dp"
+                    android:layout_weight=".6"
+                    ></TextView>
+
+                <Button
+                    android:id="@+id/CambiarFecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cambiar"
+                    android:backgroundTint="#2e3a46"
+                    android:textSize="18dp"
+                    ></Button>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/ContenidoNuevo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="18dp"
+                android:inputType="text|textMultiLine"
+                ></EditText>
+
+            <Button
+                android:id="@+id/Guardar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guardar"></Button>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>
