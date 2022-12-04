@@ -24,9 +24,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
 
-
-
+    public void GoToTasksList(View v) {
+        Intent i = new Intent(this, TasksList.class);
+        startActivity(i);
     }
 
 
