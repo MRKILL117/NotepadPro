@@ -1,11 +1,16 @@
 package com.example.notepadpro;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -24,6 +29,27 @@ public class NotasActivity extends AppCompatActivity implements agregarNota.Data
     private RecyclerView.LayoutManager miLayoutManager;
     private Button agregar;
     private int counter =0;
+
+    // Menu methods
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.notes_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.addNoteMenuButton:
+                return true;
+            case R.id.goToTasksMenuButton:
+                Intent i = new Intent(this, TasksList.class);
+                startActivity(i);
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
