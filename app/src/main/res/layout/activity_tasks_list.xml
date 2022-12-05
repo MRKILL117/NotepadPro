@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".TasksList"
     android:orientation="vertical"
-    android:paddingHorizontal="10dp">
+    android:paddingHorizontal="10dp"
+    android:background="#201c37">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,17 +17,12 @@
         android:layout_marginTop="10dp">
         <TextView
             android:text="Tareas"
-            android:textSize="40sp"
+            android:textSize="30sp"
+            android:textColor="#dcdeb9"
             android:layout_weight="1"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/addTaskButton"
-            android:text="Agregar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="CreateTask"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

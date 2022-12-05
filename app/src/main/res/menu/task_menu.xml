@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/addTaskMenuButton"
+        android:icon="@drawable/ic_post_add"
+        android:title="Nueva tarea"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/goToNotesMenuButton"
+        android:icon="@drawable/ic_baseline_note"
+        android:title="Ir a notas"
+        app:showAsAction="ifRoom"/>
+
+</menu>
