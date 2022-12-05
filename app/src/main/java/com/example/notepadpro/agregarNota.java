@@ -24,13 +24,18 @@ import java.util.Calendar;
 public class agregarNota extends DialogFragment{
 
     private DataListener callback;
-    static String fecha = "";
-    EditText contenido, titulo;
-    static TextView fechaTitulo;
-    Button cambiarFecha, guardar;
+    private static String fecha = "";
+    private EditText contenido, titulo;
+    private static TextView fechaTitulo;
+    private Button cambiarFecha, guardar;
+    private static Notas nota = null;
 
     public agregarNota() {
         // Required empty public constructor
+    }
+
+    public static void setNota(Notas nueva){
+        nota = nueva;
     }
 
     @Override
@@ -41,6 +46,13 @@ public class agregarNota extends DialogFragment{
         titulo = view.findViewById(R.id.TituloNuevo);
         fechaTitulo = view.findViewById(R.id.FechaNuevo);
         cambiarFecha = view.findViewById(R.id.CambiarFecha);
+
+        if(nota != null){
+            contenido.setText(nota.getContenido());
+            titulo.setText(nota.getTitulo());
+            fechaTitulo.setText(nota.getFecha());
+        }
+
         cambiarFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +70,9 @@ public class agregarNota extends DialogFragment{
                 callback.enviarInfo(nueva);
             }
         });
+        nota = null;
         return view;
+
     }
 
     public void onAttach() {
