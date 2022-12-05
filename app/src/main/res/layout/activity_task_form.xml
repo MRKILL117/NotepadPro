@@ -43,7 +43,8 @@
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:onClick="OpenTimePicker"/>
     </LinearLayout>
 
     <EditText
