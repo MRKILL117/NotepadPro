@@ -7,13 +7,16 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -97,4 +100,27 @@ public class TaskForm extends AppCompatActivity {
             taskDueDateButton.setText(date);
         }
     }
+
+    // Time picker
+    public void OpenTimePicker(View v) {
+        DialogFragment timePicker = new TaskForm.TimePickerModal();
+        timePicker.show(getSupportFragmentManager(), "Tiempo");
+    }
+    public static class TimePickerModal extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+            return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
+        }
+
+        @Override
+        public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+            String time =  hour + ":" + minute;
+            taskDueTimeButton.setText(time);
+        }
+    }
+
 }
