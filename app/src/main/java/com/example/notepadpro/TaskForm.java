@@ -25,6 +25,8 @@ public class TaskForm extends AppCompatActivity {
 
     private EditText taskTitleInput, taskContentInput;
     private static Button taskDueDateButton, taskDueTimeButton;
+    private int position;
+    private Task taskToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,26 @@ public class TaskForm extends AppCompatActivity {
         taskContentInput = findViewById(R.id.taskContentInput);
         taskDueDateButton = findViewById(R.id.dueDateButton);
         taskDueTimeButton = findViewById(R.id.dueTimeButton);
+
+        this.GetParams();
+    }
+
+    protected void GetParams() {
+        Intent data = getIntent();
+        if((this.position = data.getIntExtra("position", -1)) != -1) {
+            this.taskToEdit = new Task(
+                    data.getStringExtra("title"),
+                    data.getStringExtra("content"),
+                    data.getStringExtra("dueDate"),
+                    data.getStringExtra("dueTime")
+            );
+            this.taskTitleInput.setText(this.taskToEdit.title);
+            this.taskContentInput.setText(this.taskToEdit.content);
+            this.taskDueDateButton.setText(this.taskToEdit.dueDate.length() > 0 ? this.taskToEdit.dueDate : "fecha limite");
+            this.taskDueTimeButton.setText(this.taskToEdit.dueTime.length() > 0 ? this.taskToEdit.dueTime : "hora limite");
+            Button acceptButton = findViewById(R.id.acceptButton);
+            acceptButton.setText("Editar");
+        }
     }
 
     public void CloseActivity(View v) {
@@ -42,11 +64,12 @@ public class TaskForm extends AppCompatActivity {
             case R.id.acceptButton:
                 Task newTask = this.ValidateAndGetTaskCreated();
                 if(newTask != null) {
-                    i.putExtra("taskTitle", newTask.title);
-                    i.putExtra("taskContent", newTask.content);
-                    i.putExtra("taskDueDate", newTask.dueDate);
-                    i.putExtra("taskDueTime", newTask.dueTime);
-                    setResult(200, i);
+                    i.putExtra("title", newTask.title);
+                    i.putExtra("content", newTask.content);
+                    i.putExtra("dueDate", newTask.dueDate);
+                    i.putExtra("dueTime", newTask.dueTime);
+                    if(this.position != -1) i.putExtra("position", this.position);
+                    setResult(position != -1 ? 202 : 200, i);
                     finish();
                 }
                 else Toast.makeText(this, "Campos incompletos", Toast.LENGTH_LONG).show();

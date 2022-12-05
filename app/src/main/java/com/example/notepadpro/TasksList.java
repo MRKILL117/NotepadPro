@@ -26,7 +26,8 @@ import java.util.List;
 
 public class TasksList extends AppCompatActivity {
 
-    private static int OK = 200;
+    private static final int CREATED_OK = 200;
+    private static final int EDITED_OK = 202;
     private List<Task> tasks = new ArrayList<Task>();
     private RecyclerView recyclerView;
     private RecyclerView.Adapter recyclerViewAdapter;
@@ -39,15 +40,28 @@ public class TasksList extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     Log.i("customLog", "On activity result: " + result.getResultCode());
-                    if(result.getResultCode() == OK) {
-                        Intent i = result.getData();
-                        AddTask(new Task(
-                                i.getStringExtra("taskTitle"),
-                                i.getStringExtra("taskContent"),
-                                i.getStringExtra("taskDueDate"),
-                                i.getStringExtra("taskDueTime")
-                                )
-                        );
+                    if(result.getResultCode() == 404) return;
+                    Intent i = result.getData();
+                    String title = i.getStringExtra("title"),
+                            content = i.getStringExtra("content"),
+                            dueDate = i.getStringExtra("dueDate"),
+                            dueTime = i.getStringExtra("dueTime");
+                    switch (result.getResultCode()) {
+                        case CREATED_OK:
+                            AddTask(new Task(title, content, dueDate, dueTime));
+                            break;
+                        case EDITED_OK:
+                            int pos = i.getIntExtra("position", -1);
+                            if(pos == -1) break;
+                            Task taskToEdit = tasks.get(pos);
+                            taskToEdit.title = title;
+                            taskToEdit.content = content;
+                            taskToEdit.dueDate = dueDate;
+                            taskToEdit.dueTime = dueTime;
+                            Log.i("custom", "Updating task");
+                            Log.i("custom", title);
+                            UpdateTask(pos);
+                            break;
                     }
                 }
             }
@@ -65,9 +79,15 @@ public class TasksList extends AppCompatActivity {
     private void InitializeRecyclerView() {
         this.recyclerView = findViewById(R.id.tasksRecyclerView);
         this.recyclerViewLayoutManager = new LinearLayoutManager(this);
-        this.recyclerViewAdapter = new TaskRecyclerViewAdapter(this.tasks, R.layout.task_item, new TaskRecyclerViewAdapter.OnItemClickListener() {
+        this.recyclerViewAdapter = new TaskRecyclerViewAdapter(this.tasks, R.layout.task_item, new TaskRecyclerViewAdapter.OnDeleteClickListener() {
             @Override
-            public void onItemClick(String title, String content, String dueDate, String dueTime, int pos) {
+            public void onDeleteClick(int pos) {
+                RemoveTask(pos);
+            }
+        }, new TaskRecyclerViewAdapter.OnEditClickListener() {
+            @Override
+            public void onEditClick(int pos) {
+                GoToEditTask(pos);
             }
         });
         this.recyclerView.setLayoutManager(this.recyclerViewLayoutManager);
@@ -95,6 +115,16 @@ public class TasksList extends AppCompatActivity {
     private void RemoveTask(int pos) {
         this.tasks.remove(pos);
         this.recyclerViewAdapter.notifyItemRemoved(pos);
+    }
+    private void GoToEditTask(int pos) {
+        Task selectedTask = this.tasks.get(pos);
+        Intent i = new Intent(this, TaskForm.class);
+        i.putExtra("title", selectedTask.title);
+        i.putExtra("content", selectedTask.content);
+        i.putExtra("dueDate", selectedTask.dueDate);
+        i.putExtra("dueTime", selectedTask.dueTime);
+        i.putExtra("position", pos);
+        this.modalLauncher.launch(i);
     }
     private void UpdateTask(int pos) {
         this.recyclerViewAdapter.notifyItemChanged(pos);
