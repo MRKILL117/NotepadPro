@@ -39,19 +39,8 @@
                 android:textOn="Eliminar"
                 android:textColor="#dcdeb9"
                 android:backgroundTint="#fd4848"
+                android:layout_marginHorizontal="20dp"
                 ></ToggleButton>
-
-            <Button
-                android:layout_marginTop="8dp"
-                android:layout_weight=".2"
-                android:id="@+id/agregarNota"
-                android:layout_marginHorizontal="10dp"
-                android:backgroundTint="#fd4848"
-                android:text="Agregar"
-                android:drawableLeft="@drawable/ic_mas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></Button>
-
         </LinearLayout>
 
 
