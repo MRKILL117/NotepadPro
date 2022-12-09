@@ -27,7 +27,6 @@ public class NotasActivity extends AppCompatActivity implements agregarNota.Data
     private RecyclerView myRecyclerView;
     private RecyclerView.Adapter miAdaptador;
     private RecyclerView.LayoutManager miLayoutManager;
-    private Button agregar;
     private int counter =0;
 
     // Menu methods
@@ -42,6 +41,8 @@ public class NotasActivity extends AppCompatActivity implements agregarNota.Data
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.addNoteMenuButton:
+                DialogFragment fragment = new agregarNota();
+                fragment.show(getSupportFragmentManager(), "Nueva nota");
                 return true;
             case R.id.goToTasksMenuButton:
                 Intent i = new Intent(this, TasksList.class);
@@ -55,7 +56,6 @@ public class NotasActivity extends AppCompatActivity implements agregarNota.Data
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notas);
-        agregar = findViewById(R.id.agregarNota);
         lista = new ArrayList<Notas>();
         myRecyclerView = (RecyclerView) findViewById(R.id.RecyclerNotas);
         miLayoutManager = new LinearLayoutManager(this);
@@ -84,13 +84,7 @@ public class NotasActivity extends AppCompatActivity implements agregarNota.Data
         });
         myRecyclerView.setLayoutManager(miLayoutManager);
         myRecyclerView.setAdapter(miAdaptador);
-        agregar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment fragment = new agregarNota();
-                fragment.show(getSupportFragmentManager(), "Nueva nota");
-            }
-        });
+
     }
 
     public void agregarElemento(Notas nota, int posicion){
